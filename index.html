@@ -170,6 +170,14 @@
             grid-column: 2;
             grid-row: 3;
         }
+
+        #emojiSelector {
+            margin: 10px 0;
+            font-size: 18px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 
@@ -180,6 +188,16 @@
             <div id="gameScore">
                 <div id="score">Score: 0</div>
                 <button id="startBtn">Start</button>
+            </div>
+            <div>
+                <label for="emojiSelector">Choose Snake Emoji:</label>
+                <select id="emojiSelector">
+                    <option value="🌮" selected>🌮 Taco</option>
+                    <option value="🍎">🍎 Apple</option>
+                    <option value="🍕">🍕 Pizza</option>
+                    <option value="🐍">🐍 Snake</option>
+                    <option value="🍔">🍔 Burger</option>
+                </select>
             </div>
             <div class="controls">
                 <button id="up" class="control-btn" onclick="changeDirectionByButton('up')">↑</button>
@@ -194,10 +212,11 @@
         const ctx = canvas.getContext('2d');
         const scoreElement = document.getElementById('score');
         const startBtn = document.getElementById('startBtn');
+        const emojiSelector = document.getElementById('emojiSelector');
 
         const gridSize = 15;
         const tileCount = canvas.width / gridSize;
-        const tacoEmoji = '🌮';
+        let snakeEmoji = '🌮';
 
         let snake = [{ x: 10, y: 10 }];
         let food = { x: 15, y: 15 };
@@ -205,6 +224,10 @@
         let dy = 0;
         let score = 0;
         let gameRunning = false;
+
+        emojiSelector.addEventListener('change', (event) => {
+            snakeEmoji = event.target.value;
+        });
 
         function drawGame() {
             if (!gameRunning) return;
@@ -241,12 +264,12 @@
         function drawSnake() {
             ctx.font = `${gridSize}px Arial`;
             snake.forEach(segment => {
-                ctx.fillText(tacoEmoji, segment.x * gridSize, (segment.y + 1) * gridSize);
+                ctx.fillText(snakeEmoji, segment.x * gridSize, (segment.y + 1) * gridSize);
             });
         }
 
         function drawFood() {
-            ctx.fillText(tacoEmoji, food.x * gridSize, (food.y + 1) * gridSize);
+            ctx.fillText(snakeEmoji, food.x * gridSize, (food.y + 1) * gridSize);
         }
 
         function generateFood() {
