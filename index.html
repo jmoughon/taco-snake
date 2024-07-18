@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Snake Game</title>
     <style>
         body {
@@ -14,6 +14,12 @@
             margin: 0;
             background-color: #f0f0f0;
             font-family: Arial, sans-serif;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         .game-container {
@@ -120,6 +126,7 @@
                 -5px -5px 10px #ffffff;
             position: relative;
             overflow: hidden;
+            touch-action: manipulation;
         }
 
         .control-btn::before {
@@ -204,9 +211,12 @@
 
             clearCanvas();
             moveSnake();
+            if (checkCollision()) {
+                gameOver();
+                return;
+            }
             drawSnake();
             drawFood();
-            checkCollision();
             updateScore();
             setTimeout(drawGame, 200);
         }
@@ -242,20 +252,30 @@
         function generateFood() {
             food.x = Math.floor(Math.random() * tileCount);
             food.y = Math.floor(Math.random() * tileCount);
+
+            // Ensure food does not spawn on the snake
+            while (snake.some(segment => segment.x === food.x && segment.y === food.y)) {
+                food.x = Math.floor(Math.random() * tileCount);
+                food.y = Math.floor(Math.random() * tileCount);
+            }
         }
 
         function checkCollision() {
             const head = snake[0];
 
+            // Check wall collision
             if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
-                gameOver();
+                return true;
             }
 
+            // Check self collision
             for (let i = 1; i < snake.length; i++) {
                 if (head.x === snake[i].x && head.y === snake[i].y) {
-                    gameOver();
+                    return true;
                 }
             }
+
+            return false;
         }
 
         function gameOver() {
