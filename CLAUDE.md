@@ -8,11 +8,11 @@ This is a simple Snake game implementation built as a single-page application us
 
 ## Architecture
 
-The entire application is contained in a single `index.html` file with inline CSS and JavaScript:
+The application is structured as separate files for maintainability:
 
-- **HTML Structure**: Canvas element for the game board, control buttons, score display, and emoji selector
-- **CSS Styling**: Neumorphic design with responsive layout and mobile-friendly touch controls
-- **JavaScript Game Logic**: Canvas-based rendering using 2D context, game loop with collision detection, and input handling
+- **index.html**: HTML structure with canvas element for game board, control buttons, score display, and emoji selector
+- **style.css**: Neumorphic design with responsive layout and mobile-friendly touch controls
+- **script.js**: Canvas-based rendering using 2D context, game loop with collision detection, and input handling
 
 ## Key Components
 
@@ -32,7 +32,30 @@ This is a client-side only application with no build process required. To run:
 ## Game Mechanics
 
 - Snake moves on a 20x20 grid
-- Food spawns randomly, avoiding snake body positions
-- Score increases by 10 points per food eaten
+- Regular food spawns randomly, avoiding snake body positions
+- Regular food worth 10 points per food eaten
+- Special food (🍓 strawberry) spawns with 10% chance alongside regular food
+- Special food worth 5 points and only one can exist at a time
 - Game ends on wall collision or self-collision
 - Direction changes are prevented if they would cause immediate self-collision
+
+## Development Workflow
+
+### Planning New Features
+When planning new features or major changes:
+
+1. **Ask clarifying questions** to understand requirements fully:
+   - Gather specific details about functionality, behavior, and design
+   - Confirm technical specifications and constraints
+   - Understand user experience expectations
+
+2. **Use TASKS.md for task management**:
+   - Create/update TASKS.md file to track all planned tasks
+   - Break complex features into smaller, actionable items
+   - Update task status as work progresses
+   - Mark tasks as complete when fully implemented and tested
+
+3. **Maintain comprehensive documentation**:
+   - Update this CLAUDE.md file when architecture or game mechanics change
+   - Document new features and their implementation details
+   - Keep task lists and project overview current
